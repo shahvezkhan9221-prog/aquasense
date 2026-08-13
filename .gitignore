@@ -1,0 +1,20 @@
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Streamlit run files
+.streamlit/
+
+# Local task/ide assets
+.gemini/
+brain/
+walkthrough.md
+implementation_plan.md
+task.md
