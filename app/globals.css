@@ -30,32 +30,32 @@
 }
 
 .light {
-  --background: #f4f7f9;
-  --foreground: #101722;
+  --background: #dff3f4;
+  --foreground: #0c2a2e;
   --primary: #0b8f96;
-  --muted-foreground: #55677a;
-  --panel: #ffffff;
-  --border: rgba(16,23,34,.1);
-  --border-soft: rgba(16,23,34,.07);
-  --border-strong: rgba(16,23,34,.14);
-  --separator: rgba(16,23,34,.22);
-  --surface: rgba(16,23,34,.035);
-  --surface-hover: rgba(16,23,34,.06);
-  --surface-strong: rgba(16,23,34,.045);
-  --sidebar-bg: rgba(255,255,255,.88);
-  --topbar-bg: rgba(255,255,255,.65);
-  --panel-grad-1: rgba(255,255,255,.95);
-  --panel-grad-2: rgba(233,240,244,.88);
-  --panel-grad-1-soft: rgba(255,255,255,.92);
-  --panel-grad-2-soft: rgba(236,242,246,.85);
-  --input-bg: rgba(16,23,34,.04);
-  --dropdown-bg: #ffffff;
-  --shadow-color: rgba(16,23,34,.1);
-  --grid-texture: rgba(16,23,34,.035);
-  --grid-line: rgba(16,23,34,.08);
-  --tick-color: #55677a;
-  --tooltip-bg: #ffffff;
-  --tooltip-border: rgba(16,23,34,.12);
+  --muted-foreground: #4a7478;
+  --panel: #eefbfc;
+  --border: rgba(6,89,94,.14);
+  --border-soft: rgba(6,89,94,.1);
+  --border-strong: rgba(6,89,94,.18);
+  --separator: rgba(6,89,94,.28);
+  --surface: rgba(6,89,94,.05);
+  --surface-hover: rgba(6,89,94,.08);
+  --surface-strong: rgba(6,89,94,.06);
+  --sidebar-bg: rgba(224,247,248,.9);
+  --topbar-bg: rgba(224,247,248,.68);
+  --panel-grad-1: rgba(240,253,254,.95);
+  --panel-grad-2: rgba(203,238,240,.85);
+  --panel-grad-1-soft: rgba(240,253,254,.92);
+  --panel-grad-2-soft: rgba(207,240,242,.82);
+  --input-bg: rgba(6,89,94,.055);
+  --dropdown-bg: #eefbfc;
+  --shadow-color: rgba(6,60,64,.14);
+  --grid-texture: rgba(6,89,94,.045);
+  --grid-line: rgba(6,89,94,.1);
+  --tick-color: #4a7478;
+  --tooltip-bg: #eefbfc;
+  --tooltip-border: rgba(6,89,94,.16);
 }
 
 @theme inline {
