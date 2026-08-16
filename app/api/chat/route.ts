@@ -23,6 +23,16 @@ export async function POST(req: Request) {
   })
 
   return createUIMessageStreamResponse({
-    stream: toUIMessageStream({ stream: result.stream }),
+    stream: toUIMessageStream({
+      stream: result.stream,
+      onError: (error) => {
+        console.error("[v0] chat stream error:", error)
+        const message = error instanceof Error ? error.message : String(error)
+        if (message.toLowerCase().includes("credit card")) {
+          return "The AI Gateway needs a credit card on file before it can respond. Add one in the Vercel AI Gateway settings, then try again."
+        }
+        return "Neer couldn't reach the assistant service. Please try again in a moment."
+      },
+    }),
   })
 }
