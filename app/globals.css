@@ -148,6 +148,8 @@ button { cursor: pointer; }
 .progress-track { background: var(--border); }
 .status-box { border: 1px solid var(--border); background: var(--surface-strong); }
 .stat-card { border: 1px solid var(--border); background: var(--surface); }
+.code-chip { border: 1px solid var(--border); border-radius: 6px; background: var(--surface-strong); padding: 2px 7px; font-family: var(--font-mono); font-size: 11px; color: var(--primary); }
+.objective-icon { display: flex; height: 36px; width: 36px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--primary); }
 .border-top-soft { border-top: 1px solid var(--border); }
 .border-bottom-soft { border-bottom: 1px solid var(--border); }
 .text-separator { color: var(--separator); }
