@@ -104,6 +104,13 @@ button { cursor: pointer; }
 .profile-dropdown-item:hover { background: var(--surface-hover); }
 .profile-dropdown-item.danger { color: #fb7185; }
 .profile-dropdown-item.danger svg { color: #fb7185; }
+.state-dropdown { position: relative; }
+.state-dropdown-trigger { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-strong); border-radius: 10px; background: var(--surface); padding: 8px 12px; font-size: 12px; font-weight: 500; color: var(--foreground); transition: background .15s ease, border-color .15s ease; }
+.state-dropdown-trigger:hover { background: var(--surface-hover); }
+.state-dropdown-menu { position: absolute; top: calc(100% + 8px); left: 0; z-index: 30; display: flex; max-height: 260px; width: 208px; flex-direction: column; overflow-y: auto; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--dropdown-bg); padding: 6px; box-shadow: 0 20px 50px var(--shadow-color); animation: profile-dropdown-in .16s ease; }
+.state-dropdown-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; border-radius: 8px; padding: 8px 10px; text-align: left; font-size: 12px; color: var(--foreground); transition: background .15s ease; }
+.state-dropdown-item:hover { background: var(--surface-hover); }
+.state-dropdown-item.selected { color: var(--primary); }
 .live-toggle, .action-button { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); padding: 9px 12px; color: var(--muted-foreground); font-size: 11px; transition: .2s ease; }
 .live-toggle.on { border-color: color-mix(in srgb, var(--primary) 20%, transparent); color: var(--primary); }
 .icon-button { position: relative; display: flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--muted-foreground); }
