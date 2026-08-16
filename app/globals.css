@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+.brand-wordmark { font-family: var(--font-brand), serif; letter-spacing: .01em; }
+
 :root, .dark {
   --background: #080b12;
   --foreground: #edf4f7;
