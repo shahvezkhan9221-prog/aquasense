@@ -46,6 +46,25 @@ function DropletField() {
   return <div className="droplet-field" aria-hidden="true">{drops.map((d, i) => <span key={i} className="droplet" style={{ left: `${d.left}%`, animationDuration: `${d.duration}s`, animationDelay: `${d.delay}s`, transform: `scale(${d.scale})` }} />)}</div>
 }
 
+const guardianLines: Record<"LOW" | "MEDIUM" | "HIGH", string[]> = {
+  LOW: ["This source looks clean — great work keeping cholera and typhoid at bay!", "Readings are steady. I'll keep watch so your village stays safe.", "All clear! Safe water means fewer sick days for everyone."],
+  MEDIUM: ["Turbidity is creeping up — that's a warning sign for pathogens like giardia. Worth a field check.", "I'm sensing early trouble here. Let's flag this source before it becomes a health risk.", "Something's shifting in the water. Early warnings save lives — don't ignore this one."],
+  HIGH: ["Danger! Conditions favor cholera, dysentery and typhoid bacteria. Isolate this source now.", "This is a red alert — unsafe for drinking until it's inspected. I'm sounding the warning.", "High contamination risk detected. Please advise the community to boil water immediately."],
+}
+
+function Guardian({ risk }: { risk: "LOW" | "MEDIUM" | "HIGH" }) {
+  const [dismissed, setDismissed] = useState(false)
+  const [lineIndex, setLineIndex] = useState(0)
+  const tone = risk === "HIGH" ? "rose" : risk === "MEDIUM" ? "amber" : "emerald"
+  useEffect(() => { setLineIndex(0) }, [risk])
+  useEffect(() => { const id = setInterval(() => setLineIndex((i) => (i + 1) % guardianLines[risk].length), 9000); return () => clearInterval(id) }, [risk])
+  if (dismissed) return <button className="guardian-avatar-btn" style={{ position: "fixed", right: 22, bottom: 22, zIndex: 30, width: 56, height: 56 }} onClick={() => setDismissed(false)} aria-label="Show Neer, the water guardian"><img src="/images/neer-guardian.png" alt="Neer, the AquaSense water guardian mascot" /></button>
+  return <div className={`guardian-widget tone-${tone}`}>
+    <div className="guardian-bubble" role="status"><div className="g-name"><span className="dot" /> Neer • Water Guardian</div><p>{guardianLines[risk][lineIndex]}</p></div>
+    <button className="guardian-avatar-btn" onClick={() => setDismissed(true)} aria-label="Dismiss Neer, the water guardian"><img src="/images/neer-guardian.png" alt="Neer, the AquaSense water guardian mascot, a cartoon warrior fighting water-borne pathogens" /><span className="guardian-close"><X /></span></button>
+  </div>
+}
+
 function Spark({ data, tone = "cyan" }: { data: number[]; tone?: "cyan" | "violet" | "amber" | "rose" }) {
   const colors = { cyan: "#63e6e2", violet: "#a78bfa", amber: "#fbbf24", rose: "#fb7185" }
   return <svg viewBox="0 0 120 32" className="h-9 w-28" aria-hidden="true"><defs><linearGradient id={`spark-${tone}`} x1="0" x2="1"><stop stopColor={colors[tone]} stopOpacity=".8" /><stop offset="1" stopColor={colors[tone]} stopOpacity=".1" /></linearGradient></defs><polyline fill="none" stroke={`url(#spark-${tone})`} strokeWidth="2.5" strokeLinecap="round" points={data.map((v, i) => `${i * 120 / (data.length - 1)},${30 - v * 25}`).join(" ")} /></svg>
@@ -73,6 +92,7 @@ export default function Dashboard() {
 
   return <div className="relative z-[1] min-h-screen bg-background text-foreground">
     <DropletField />
+    <Guardian risk={metrics.risk} />
     <aside className={`sidebar ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}`}>
       <div className="flex items-center gap-3"><div className="brand-mark"><Waves /></div><div><div className="text-[15px] font-semibold tracking-tight">Aqua<span className="text-primary">Sense</span></div><div className="eyebrow mt-0.5">Water intelligence</div></div><button className="ml-auto text-muted-foreground lg:hidden" onClick={() => setMobileOpen(false)} aria-label="Close menu"><X /></button></div>
       <div className="mt-12 flex items-center justify-between"><span className="eyebrow">Workspace</span><span className="rounded-full border border-primary/20 bg-primary/10 px-2 py-0.5 font-mono text-[9px] text-primary">PRO</span></div>
