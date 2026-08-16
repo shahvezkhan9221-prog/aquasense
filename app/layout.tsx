@@ -6,7 +6,7 @@ import "./globals.css"
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" })
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
-export const metadata: Metadata = { title: "AquaSense | Water Intelligence", description: "Real-time village water quality monitoring across Northeast India." }
+export const metadata: Metadata = { title: "JalSetu | Water Intelligence", description: "Real-time village water quality monitoring across Northeast India." }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
