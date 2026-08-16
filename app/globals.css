@@ -150,6 +150,13 @@ button { cursor: pointer; }
 .stat-card { border: 1px solid var(--border); background: var(--surface); }
 .code-chip { border: 1px solid var(--border); border-radius: 6px; background: var(--surface-strong); padding: 2px 7px; font-family: var(--font-mono); font-size: 11px; color: var(--primary); }
 .objective-icon { display: flex; height: 36px; width: 36px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--primary); }
+.param-slider-wrap { position: relative; margin-top: 26px; padding-top: 22px; }
+.param-slider-value { position: absolute; top: 0; transform: translateX(-50%); font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: #ff6b57; white-space: nowrap; }
+.param-slider-input { width: 100%; height: 4px; appearance: none; -webkit-appearance: none; border-radius: 999px; outline: none; background: linear-gradient(to right, #ff6b57 0%, #ff6b57 var(--fill), var(--border-strong) var(--fill), var(--border-strong) 100%); }
+.param-slider-input::-webkit-slider-thumb { -webkit-appearance: none; width: 16px; height: 16px; border-radius: 50%; background: #ff6b57; cursor: pointer; box-shadow: 0 0 0 4px rgba(255,107,87,.18); transition: box-shadow .15s ease; }
+.param-slider-input::-webkit-slider-thumb:hover { box-shadow: 0 0 0 6px rgba(255,107,87,.22); }
+.param-slider-input::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #ff6b57; border: none; cursor: pointer; box-shadow: 0 0 0 4px rgba(255,107,87,.18); }
+.param-slider-input::-moz-range-track { background: transparent; }
 .border-top-soft { border-top: 1px solid var(--border); }
 .border-bottom-soft { border-bottom: 1px solid var(--border); }
 .text-separator { color: var(--separator); }

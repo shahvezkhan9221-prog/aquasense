@@ -173,7 +173,46 @@ export default function Dashboard() {
 
 function ChartBox({ title, dataKey, color, data, domain }: { title: string; dataKey: string; color: string; data: object[]; domain: [number, number] }) { const ct = useChartTheme(); return <div className="min-w-0"><div className="mb-3 flex items-center justify-between"><span className="text-xs font-medium text-muted-foreground">{title}</span><span className="font-mono text-[10px] text-primary/80">{thresholds[dataKey as keyof typeof thresholds]}</span></div><div className="h-48"><ResponsiveContainer width="100%" height="100%"><AreaChart data={data}><defs><linearGradient id={`fill-${dataKey}`} x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={color} stopOpacity={.22} /><stop offset="100%" stopColor={color} stopOpacity={0} /></linearGradient></defs><CartesianGrid stroke={ct.grid} vertical={false} /><XAxis dataKey="hour" tick={{ fill: ct.tick, fontSize: 9 }} tickLine={false} axisLine={false} interval="preserveStartEnd" /><YAxis domain={domain} tick={{ fill: ct.tick, fontSize: 9 }} tickLine={false} axisLine={false} width={30} /><Tooltip contentStyle={{ background: ct.tooltipBg, border: `1px solid ${ct.tooltipBorder}`, borderRadius: 10, fontSize: 11 }} /><Area type="monotone" dataKey={dataKey} stroke={color} fill={`url(#fill-${dataKey})`} strokeWidth={2} dot={false} /></AreaChart></ResponsiveContainer></div></div> }
 function Analytics() { const ct = useChartTheme(); const bars = locations.map((l, i) => ({ name: l.village.split(" ")[0], score: 92 - i * 4 + (i % 3) * 3 })); return <div className="grid gap-5 lg:grid-cols-[1.3fr_1fr]"><section className="glass-panel p-5 sm:p-6"><div className="flex items-center justify-between"><div><h2 className="text-base font-semibold">Network health score</h2><p className="mt-1 text-xs text-muted-foreground">Comparative confidence across active locations.</p></div><span className="status-chip border-primary/20 bg-primary/10 text-primary">94.8 avg</span></div><div className="mt-7 h-80"><ResponsiveContainer width="100%" height="100%"><BarChart data={bars}><CartesianGrid stroke={ct.grid} vertical={false} /><XAxis dataKey="name" tick={{ fill: ct.tick, fontSize: 10 }} axisLine={false} tickLine={false} /><YAxis domain={[0, 100]} tick={{ fill: ct.tick, fontSize: 10 }} axisLine={false} tickLine={false} /><Tooltip contentStyle={{ background: ct.tooltipBg, border: `1px solid ${ct.tooltipBorder}`, borderRadius: 10, fontSize: 11 }} /><Bar dataKey="score" fill="#63e6e2" radius={[6, 6, 0, 0]} /></BarChart></ResponsiveContainer></div></section><section className="glass-panel p-5 sm:p-6"><div className="eyebrow">Reference system</div><h2 className="mt-3 text-lg font-semibold">Safe water thresholds</h2><div className="mt-6 flex flex-col gap-4">{Object.entries(thresholds).map(([key, value]) => <div key={key} className="flex items-center justify-between border-bottom-soft pb-4 text-sm"><span className="capitalize text-muted-foreground">{key}</span><span className="font-mono text-primary">{value}</span></div>)}</div></section></div> }
-function Simulator({ metrics }: { metrics: Metrics }) { const [turbidity, setTurbidity] = useState(metrics.turbidity); const risk = turbidity > 5 ? "HIGH" : turbidity > 3.5 ? "MEDIUM" : "LOW"; return <section className="glass-panel max-w-3xl p-6 sm:p-8"><div className="flex items-start justify-between"><div><div className="eyebrow flex items-center gap-2"><SlidersHorizontal className="size-3.5 text-primary" /> Scenario lab</div><h2 className="mt-4 text-2xl font-semibold tracking-tight">Risk simulator</h2><p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">Adjust a sensor variable and see how the water safety classification responds in real time.</p></div><div className="icon-tile"><AlertTriangle className={riskClass[risk]} /></div></div><div className="mt-10"><div className="flex justify-between text-sm"><span>Turbidity</span><span className="font-mono text-primary">{turbidity.toFixed(1)} NTU</span></div><input type="range" min="0" max="10" step="0.1" value={turbidity} onChange={(e) => setTurbidity(Number(e.target.value))} className="mt-5 w-full accent-[#63e6e2]" /><div className="mt-2 flex justify-between text-[10px] text-muted-foreground"><span>Clear</span><span>Threshold: 5 NTU</span><span>Critical</span></div></div><div className={`mt-10 rounded-2xl border p-6 ${riskBg[risk]}`}><div className="eyebrow">Projected classification</div><div className={`mt-3 font-mono text-5xl font-semibold ${riskClass[risk]}`}>{risk}</div><p className="mt-3 text-xs leading-5 text-muted-foreground">{risk === "LOW" ? "Water remains within the recommended turbidity threshold." : risk === "MEDIUM" ? "An alert would be raised for field review." : "Immediate inspection and source isolation recommended."}</p></div></section> }
+function ParamSlider({ label, unit, min, max, step, value, decimals, onChange }: { label: string; unit: string; min: number; max: number; step: number; value: number; decimals: number; onChange: (v: number) => void }) {
+  const pct = ((value - min) / (max - min)) * 100
+  return <div>
+    <div className="text-sm text-foreground">{label}</div>
+    <div className="param-slider-wrap">
+      <div className="param-slider-value" style={{ left: `${pct}%` }}>{value.toFixed(decimals)}{unit ? ` ${unit}` : ""}</div>
+      <input type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(Number(e.target.value))} className="param-slider-input" style={{ "--fill": `${pct}%` } as React.CSSProperties} aria-label={label} />
+    </div>
+  </div>
+}
+
+function paramRisk(kind: "ph" | "turbidity" | "tds" | "temperature", v: number): "LOW" | "MEDIUM" | "HIGH" {
+  if (kind === "ph") return v < 6 || v > 9 ? "HIGH" : v < 6.5 || v > 8.5 ? "MEDIUM" : "LOW"
+  if (kind === "turbidity") return v > 7.5 ? "HIGH" : v > 5 ? "MEDIUM" : "LOW"
+  if (kind === "tds") return v > 750 ? "HIGH" : v > 500 ? "MEDIUM" : "LOW"
+  return v < 14 || v > 36 ? "HIGH" : v < 18 || v > 32 ? "MEDIUM" : "LOW"
+}
+
+function Simulator({ metrics }: { metrics: Metrics }) {
+  const [ph, setPh] = useState(metrics.ph)
+  const [turbidity, setTurbidity] = useState(metrics.turbidity)
+  const [tds, setTds] = useState(metrics.tds)
+  const [temperature, setTemperature] = useState(metrics.temperature)
+  const order = { LOW: 0, MEDIUM: 1, HIGH: 2 } as const
+  const risks = [paramRisk("ph", ph), paramRisk("turbidity", turbidity), paramRisk("tds", tds), paramRisk("temperature", temperature)]
+  const risk = risks.reduce((worst, r) => (order[r] > order[worst] ? r : worst), "LOW" as "LOW" | "MEDIUM" | "HIGH")
+  return <section className="glass-panel max-w-3xl p-6 sm:p-8">
+    <div className="flex items-start justify-between"><div><div className="eyebrow flex items-center gap-2"><SlidersHorizontal className="size-3.5 text-primary" /> Scenario lab</div><h2 className="mt-4 text-2xl font-semibold tracking-tight">Risk simulator</h2><p className="mt-2 max-w-lg text-sm leading-6 text-muted-foreground">Adjust sensor variables and see how the water safety classification responds in real time.</p></div><div className="icon-tile"><AlertTriangle className={riskClass[risk]} /></div></div>
+    <div className="mt-10 border-top-soft pt-8">
+      <h3 className="text-sm font-semibold">Adjust parameters</h3>
+      <div className="mt-8 flex flex-col gap-9">
+        <ParamSlider label="Water pH level" unit="" min={0} max={14} step={0.01} decimals={2} value={ph} onChange={setPh} />
+        <ParamSlider label="Turbidity (NTU)" unit="" min={0} max={20} step={0.01} decimals={2} value={turbidity} onChange={setTurbidity} />
+        <ParamSlider label="Total dissolved solids (mg/L)" unit="" min={0} max={1000} step={0.1} decimals={2} value={tds} onChange={setTds} />
+        <ParamSlider label="Temperature (°C)" unit="" min={0} max={45} step={0.01} decimals={2} value={temperature} onChange={setTemperature} />
+      </div>
+    </div>
+    <div className={`mt-10 rounded-2xl border p-6 ${riskBg[risk]}`}><div className="eyebrow">Projected classification</div><div className={`mt-3 font-mono text-5xl font-semibold ${riskClass[risk]}`}>{risk}</div><p className="mt-3 text-xs leading-5 text-muted-foreground">{risk === "LOW" ? "All parameters remain within recommended safety thresholds." : risk === "MEDIUM" ? "One or more parameters are drifting outside safe range — an alert would be raised for field review." : "One or more parameters are critical. Immediate inspection and source isolation recommended."}</p></div>
+  </section>
+}
 const objectives = [
   { icon: ShieldCheck, title: "Democratized access", body: "Puts village-level diagnostic criteria directly in the hands of local municipal bodies and health inspectors." },
   { icon: Radio, title: "Early warnings", body: "Continuously evaluates pH, turbidity, TDS, and temperature to flag contamination vectors before they escalate." },
