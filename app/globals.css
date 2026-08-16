@@ -149,24 +149,24 @@ button { cursor: pointer; }
 @keyframes pathogen-drift { 0% { opacity: 0; transform: translate(0, 0) scale(.6); } 15% { opacity: .55; } 50% { transform: translate(14px, -10px) scale(1); } 85% { opacity: .45; } 100% { opacity: 0; transform: translate(-6px, 12px) scale(.6); } }
 
 /* Neer, the water guardian — hero ambassador with reactive speech bubble, docked beside the headline */
-.guardian-inline { position: relative; display: inline-flex; align-items: center; gap: 12px; }
-.guardian-inline-avatar { position: relative; flex-shrink: 0; display: flex; width: 58px; height: 58px; align-items: center; justify-content: center; border: none; background: transparent; padding: 0; }
-.guardian-inline-avatar img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 8px 16px var(--shadow-color)); animation: guardian-bob 3.2s ease-in-out infinite; }
-.guardian-inline-avatar::before { position: absolute; inset: 4px; border-radius: 50%; background: color-mix(in srgb, var(--primary) 24%, transparent); filter: blur(12px); content: ""; z-index: -1; animation: guardian-glow 3.2s ease-in-out infinite; }
+.guardian-inline { position: relative; display: inline-flex; align-items: center; gap: 18px; }
+.guardian-inline-avatar { position: relative; flex-shrink: 0; display: flex; width: 132px; height: 132px; align-items: center; justify-content: center; border: none; background: transparent; padding: 0; }
+.guardian-inline-avatar img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 10px 22px var(--shadow-color)); animation: guardian-bob 3.2s ease-in-out infinite; }
+.guardian-inline-avatar::before { position: absolute; inset: 14px; border-radius: 50%; background: color-mix(in srgb, var(--primary) 24%, transparent); filter: blur(18px); content: ""; z-index: -1; animation: guardian-glow 3.2s ease-in-out infinite; }
 @keyframes guardian-bob { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-6px) rotate(1.5deg); } }
 @keyframes guardian-glow { 0%, 100% { opacity: .55; transform: scale(1); } 50% { opacity: .85; transform: scale(1.12); } }
 .guardian-widget.tone-amber .guardian-inline-avatar::before { background: color-mix(in srgb, #fbbf24 32%, transparent); }
 .guardian-widget.tone-rose .guardian-inline-avatar::before { background: color-mix(in srgb, #fb7185 36%, transparent); }
 .guardian-widget.tone-rose .guardian-inline-avatar img { animation: guardian-bob 3.2s ease-in-out infinite, guardian-alert .5s ease-in-out infinite; }
 @keyframes guardian-alert { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
-.guardian-close { position: absolute; right: -2px; top: -2px; display: flex; width: 16px; height: 16px; align-items: center; justify-content: center; border: 1px solid var(--border-strong); border-radius: 50%; background: var(--dropdown-bg); color: var(--muted-foreground); }
-.guardian-close svg { width: 9px; }
-.guardian-bubble-inline { position: relative; max-width: 260px; border: 1px solid var(--border-strong); border-radius: 14px; background: var(--dropdown-bg); padding: 10px 13px; box-shadow: 0 12px 30px var(--shadow-color); animation: bubble-in .35s ease; }
+.guardian-close { position: absolute; right: 4px; top: 4px; display: flex; width: 20px; height: 20px; align-items: center; justify-content: center; border: 1px solid var(--border-strong); border-radius: 50%; background: var(--dropdown-bg); color: var(--muted-foreground); }
+.guardian-close svg { width: 11px; }
+.guardian-bubble-inline { position: relative; max-width: 280px; border: 1px solid var(--border-strong); border-radius: 14px; background: var(--dropdown-bg); padding: 12px 15px; box-shadow: 0 12px 30px var(--shadow-color); animation: bubble-in .35s ease; }
 .guardian-bubble-inline::before { position: absolute; left: -6px; top: 50%; width: 12px; height: 12px; background: var(--dropdown-bg); border-left: 1px solid var(--border-strong); border-bottom: 1px solid var(--border-strong); content: ""; transform: translateY(-50%) rotate(45deg); }
 .guardian-bubble-inline .g-name { display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--primary); }
 .guardian-bubble-inline .g-name span.dot { width: 5px; height: 5px; border-radius: 50%; background: #6ee7b7; box-shadow: 0 0 6px #6ee7b7; }
 .guardian-bubble-inline p { margin: 5px 0 0; font-size: 11.5px; line-height: 1.45; color: var(--foreground); }
 @keyframes bubble-in { 0% { opacity: 0; transform: translateX(-4px) scale(.96); } 100% { opacity: 1; transform: translateX(0) scale(1); } }
-@media (max-width: 640px) { .guardian-inline { flex-basis: 100%; } .guardian-inline-avatar { width: 46px; height: 46px; } .guardian-bubble-inline { max-width: 100%; } }
+@media (max-width: 640px) { .guardian-inline { flex-basis: 100%; } .guardian-inline-avatar { width: 92px; height: 92px; } .guardian-bubble-inline { max-width: 100%; } }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } .droplet-field, .ripple-rings, .microbe-cluster { display: none; } .guardian-inline-avatar img, .guardian-inline-avatar::before { animation: none; } }
