@@ -90,6 +90,20 @@ button { cursor: pointer; }
 .nav-item.active { border-color: color-mix(in srgb, var(--primary) 13%, transparent); background: color-mix(in srgb, var(--primary) 9%, transparent); color: var(--primary); }
 .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #6ee7b7; box-shadow: 0 0 10px #6ee7b7; }
 .avatar { display: flex; width: 32px; height: 32px; align-items: center; justify-content: center; border: 1px solid rgba(167,139,250,.3); border-radius: 50%; background: rgba(167,139,250,.13); color: #7c5fd6; font-family: monospace; font-size: 10px; }
+.profile-menu { position: relative; }
+.profile-trigger { cursor: pointer; transition: border-color .15s ease, transform .15s ease; }
+.profile-trigger:hover { border-color: rgba(167,139,250,.55); transform: translateY(-1px); }
+.profile-dropdown { position: absolute; bottom: calc(100% + 10px); z-index: 30; display: flex; width: 220px; flex-direction: column; border: 1px solid var(--border-strong); border-radius: 14px; background: var(--dropdown-bg); padding: 8px; box-shadow: 0 20px 50px var(--shadow-color); animation: profile-dropdown-in .16s ease; }
+.profile-dropdown.align-start { left: 0; }
+.profile-dropdown.align-end { right: 0; bottom: auto; top: calc(100% + 10px); }
+@keyframes profile-dropdown-in { 0% { opacity: 0; transform: translateY(4px) scale(.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+.profile-dropdown-header { display: flex; align-items: center; gap: 10px; padding: 6px 8px 10px; }
+.profile-dropdown-divider { height: 1px; margin: 4px 0; background: var(--border-soft); }
+.profile-dropdown-item { display: flex; align-items: center; gap: 10px; border-radius: 9px; padding: 9px 10px; color: var(--foreground); font-size: 12px; text-align: left; transition: background .15s ease; }
+.profile-dropdown-item svg { width: 15px; color: var(--muted-foreground); }
+.profile-dropdown-item:hover { background: var(--surface-hover); }
+.profile-dropdown-item.danger { color: #fb7185; }
+.profile-dropdown-item.danger svg { color: #fb7185; }
 .live-toggle, .action-button { display: flex; align-items: center; gap: 8px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); padding: 9px 12px; color: var(--muted-foreground); font-size: 11px; transition: .2s ease; }
 .live-toggle.on { border-color: color-mix(in srgb, var(--primary) 20%, transparent); color: var(--primary); }
 .icon-button { position: relative; display: flex; width: 34px; height: 34px; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--muted-foreground); }
